@@ -35,5 +35,6 @@ test_beta_amylases <- tibble(
 test_set <- list(test_alpha_amylases, test_beta_amylases)
 names(test_set) <- c("test_alpha_amylases", "test_beta_amylases")
 
-#Write list of tables to Excel document to recreate test-set.xlsx
-write_xlsx(test_set, path = "test-set.xlsx")
+#Write list of tables to Excel document to recreate test-set.xlsx in the input
+#directory
+write_xlsx(test_set, path = "input/test-set.xlsx")
