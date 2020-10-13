@@ -5,7 +5,7 @@
 #and sheet names so that genes can be subsetted into groups before processing.
 
 #Set path_to_file variable to the input Excel file path
-path_to_file <- as.character("test-set.xlsx")
+path_to_file <- as.character("input/test-set.xlsx")
 
 #Attach required packages
 library(data.table)
@@ -126,8 +126,8 @@ names(output_split) <- sorted_sheets
 
 #Create file path for the output that appends the "-output" tag to the original
 #file name and places the output in the same directory as the original file
-output_dir <- str_match(path_to_file, pattern = "^(.+)\\.xlsx$")
-output_file <- paste0(output_dir[1, 2], "-output.xlsx")
+file_name <- str_match(path_to_file, pattern = "\\/(.+)\\.xlsx$")
+output_file <- paste0("output/", file_name[1, 2], "-output.xlsx")
 
 #Write tables to Excel file
 write_xlsx(output_split, path = output_file)
