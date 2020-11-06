@@ -1,8 +1,20 @@
-#This is the main R script for EnsemblX. Running this script will pull
-#information stored in the input Excel file, try to retrieve gene descriptions
-#for each gene from BARLEX and Ensembl Plants, and then write the information
-#into a new Excel file. The final Excel file should preserve the original sheets
-#and sheet names so that genes can be subsetted into groups before processing.
+################################################################################
+# EnsemblX automates the retrieval of short gene descriptions for barley genes.
+#### Copyright (C) 2020  Carl H. Simmons
+################################################################################
+#### This program is free software: you can redistribute it and/or modify it
+#### under the terms of the GNU General Public License as published by the Free 
+#### Software Foundation, either version 3 of the License, or (at your option)
+#### any later version.
+################################################################################
+#### This program is distributed in the hope that it will be useful, but
+#### WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+#### or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+#### License for more details.
+################################################################################
+#### You should have received a copy of the GNU General Public License along
+#### with this program. If not, see <https://www.gnu.org/licenses/>.
+################################################################################
 
 #Set path_to_file variable to the input Excel file path
 path_to_file <- as.character("input/test-set.xlsx")
