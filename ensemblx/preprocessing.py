@@ -3,6 +3,15 @@ import pandas as pd
 
 
 def barlex_data(file_path):
+    """
+        Takes the 'BARLEX: CDS HC May 2016' FASTA file from the BARLEX BLAST server downloads page at:
+
+        (https://webblast.ipk-gatersleben.de/barley_ibsc/downloads/)
+
+        and extracts the annotated sequence headers into a tidy DataFrame. This DataFrame is then saved as a CSV file
+        that is called by the main EnsemblX script. The only argument to this function is the file path to the original
+        data.
+    """
     # Read in FASTA sequence headers marked with '>' but do not read in DNA sequences
     with open(file_path, 'r') as barlex_file:
         barlex_headers = []
@@ -43,11 +52,6 @@ def barlex_data(file_path):
 
     # Remove errant line breaks in the InterPro Ids
     barlex_df['interpro_id'] = barlex_df['interpro_id'].str.replace('\n', '')
-
-    # Clean id strings into lists of ids
-    cols_to_list = ['go_terms', 'pfam_id', 'interpro_id']
-    for col in cols_to_list:
-        barlex_df[col] = barlex_df[col].str.split(pat=', ').tolist()
 
     # Recode gene classes from abbreviations to descriptive strings
     gene_class_dict = {
