@@ -17,3 +17,5 @@ This script was created to facilitate the typically manual process of copying an
 Currently, the main functionality of reading and writing the proper information to and from a multi-sheet Excel file is still being coded; however, the base retrieval functions have been coded into a simple, proof-of-concept GUI as a "Quick Reference" widget.
 
 Below is a GIF demonstration of that functionality whereby the VRN-H1 [example gene entry](https://plants.ensembl.org/Hordeum_vulgare/Gene/Summary?g=HORVU5Hr1G095630) from Ensembl Plants is referenced using its Gene Stable ID: HORVU5Hr1G095630. This widget is not currently packaged as an executable but can be run via the `ensemblx.py` script.
+
+![Quick Reference Animated Demo](https://github.com/crlsmmns/ensemblx/blob/main/quick_reference_demo.gif)
