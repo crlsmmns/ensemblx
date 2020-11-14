@@ -182,3 +182,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Test data
+data/excel-test-set.xls
