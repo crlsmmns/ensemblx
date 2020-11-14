@@ -108,18 +108,36 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
-        title = ttk.Label(self, text="EnsemblX", font=('Arial', 24))
+        s = ttk.Style()
+        s.configure('EnsemblXTitle.TLabel', font=('Arial', 24), padding=[0, 10, 0, 0])
+        s.configure('EnsemblXTagline.TLabel', font=('Arial', 14), padding=[0, 0, 0, 10])
+        s.configure('StartPage.TButton', font=('Arial', 14), padding=[50, 5], width=16)
+        s.configure('Copyright.TLabel', font=('Arial', 10), padding=[0, 10, 0, 0])
+        s.configure('Warranty.TLabel', font=('Arial', 8), padding=[10, 5, 10, 0])
+        s.configure('Redistribute.TLabel', font=('Arial', 8), padding=[10, 0, 10, 10])
+
+        title = ttk.Label(self, text="EnsemblX", style='EnsemblXTitle.TLabel')
         title.grid(column=1, row=0)
 
-        tagline = ttk.Label(self, text="Automated High-Throughput Barley Gene Annotation Lookup", font=('Arial', 14))
+        tagline = ttk.Label(self, text="Automated Barley Gene Annotation Lookup", style='EnsemblXTagline.TLabel')
         tagline.grid(column=0, row=2, columnspan=3)
 
-        excel_page_button = ttk.Button(self, text="Import/Export Excel", command=lambda: controller.show_frame(ExcelPage))
+        excel_page_button = ttk.Button(self, text="Import from Excel", command=lambda: controller.show_frame(ExcelPage), style='StartPage.TButton')
         excel_page_button.grid(column=1, row=3)
 
         quick_reference_button = ttk.Button(self, text="Quick Reference",
-                                       command=lambda: controller.show_frame(QuickReferencePage))
+                                       command=lambda: controller.show_frame(QuickReferencePage), style='StartPage.TButton')
         quick_reference_button.grid(column=1, row=4)
+
+        copyright_label = ttk.Label(self, text='EnsemblX Copyright (C) 2020 Carl H. Simmons', style='Copyright.TLabel')
+        copyright_label.grid(column=0, row=5, columnspan=3)
+
+        warranty_label = ttk.Label(self, text='This program comes with ABSOLUTELY NO WARRANTY.', style='Warranty.TLabel')
+        warranty_label.grid(column=0, row=6, columnspan=3)
+
+        redistribute_label = ttk.Label(self, text='This is free software, and you are welcome to redistribute it under certain conditions.', style='Redistribute.TLabel')
+        redistribute_label.grid(column=0, row=7, columnspan=3)
+
 
 
 class ExcelPage(tk.Frame):
@@ -139,14 +157,43 @@ class QuickReferencePage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        open_file_button = ttk.Button(self, text="Ensembl Ref")
-        open_file_button.grid(column=2, row=0)
+        title_quick = ttk.Label(self, text="Quick Reference", font=('Arial', 20))
+        title_quick.grid(column=0, row=0)
 
-        go_button = ttk.Button(self, text="Go!")
-        go_button.grid(column=3, row=0)
+        # Initialize variables
+        gene_id = tk.StringVar()
 
-        start_page_button = ttk.Button(self, text="Start Page", command=lambda: controller.show_frame(StartPage))
-        start_page_button.grid(column=2, row=1)
+        # Clear and reform frame
+        output_frame = tk.Frame(self)
+        output_frame.grid(column=0, row=3)
+
+        # Create input interactions
+        entry_frame = tk.Frame(self)
+        entry_frame.grid(column=0, row=1)
+
+        entry_label = ttk.Label(entry_frame, text="Enter Gene ID:", font=('Arial', 16))
+        entry_label.grid(column=0, row=0)
+
+        entry_box = ttk.Entry(entry_frame, width=20, textvariable=gene_id)
+        entry_box.grid(column=1, row=0)
+
+        entry_button = ttk.Button(entry_frame, text="Go")
+        entry_button.grid(column=2, row=0)
+
+        # Create output source selector
+        source_select_frame = tk.Frame(self)
+        source_select_frame.grid(column=0, row=2)
+
+        source_selected = tk.IntVar()
+        source_selected.set(1)
+
+        source_select_barlex = ttk.Radiobutton(source_select_frame, text='BARLEX: CDS HC May 2016', value=1,
+                                               variable=source_selected)
+        source_select_barlex.grid(column=0, row=0)
+
+        source_select_ensembl = ttk.Radiobutton(source_select_frame, text='Ensembl API', value=2,
+                                                variable=source_selected)
+        source_select_ensembl.grid(column=1, row=0)
 
 
 
