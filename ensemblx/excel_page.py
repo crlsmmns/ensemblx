@@ -30,7 +30,7 @@ class ExcelPage(tk.Frame):
         get_file_button.pack()
 
         frame3 = tk.Frame(self)
-        frame3.pack(padx=10, pady=10)
+        frame3.pack(side='bottom', padx=10, pady=10)
 
         return_button = ttk.Button(frame3, text="Return to Start Page",
                                    command=lambda: controller.show_frame(start_page.StartPage))
@@ -64,7 +64,7 @@ class ExcelPage(tk.Frame):
             print('Api Check!')
 
     def add_barlex_data(self):
-        barlex_df = pd.read_csv('../data/barlex_clean_df.csv')
+        barlex_df = pd.read_csv('data/barlex_clean_df.csv')
 
         cols_to_list = ['go_terms', 'pfam_id', 'interpro_id']
         for col in cols_to_list:

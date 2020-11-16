@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 
 import pandas as pd
+import requests
+import re
 
 import ensemblx.start_page as start_page
 
@@ -35,7 +37,7 @@ class QuickReferencePage(tk.Frame):
         entry_box = ttk.Entry(frame2, width=20, textvariable=gene_id)
         entry_box.pack(side='left')
 
-        entry_button = ttk.Button(frame2, text="Go", command=lambda: self.barlex_output(gene_id))
+        entry_button = ttk.Button(frame2, text="Go", command=lambda: self.ensembl_output(gene_id))
         entry_button.pack(side='left', padx=10)
 
         frame3 = tk.Frame(self)
@@ -125,7 +127,7 @@ class QuickReferencePage(tk.Frame):
 
     def barlex_output(self, gene_id):
         try:
-            barlex_df = pd.read_csv('../data/barlex_clean_df.csv', index_col='gene_id')
+            barlex_df = pd.read_csv('data/barlex_clean_df.csv', index_col='gene_id')
 
             cols_to_list = ['go_terms', 'pfam_id', 'interpro_id']
             for col in cols_to_list:
@@ -209,3 +211,47 @@ class QuickReferencePage(tk.Frame):
 
             self.interpro_ids_label.config(text='')
             self.interpro_ids.config(text='')
+
+    def ensembl_output(self, gene_id):
+        server = "https://rest.ensembl.org"
+        ext = "/lookup/id/"
+        headers = {"Content-Type": "application/json"}
+
+        url = server + ext + gene_id.get()
+
+        ensembl_response = requests.get(url, headers=headers)
+
+        ensembl_json = ensembl_response.json()
+
+        if ensembl_json.get('description') is not None:
+            ensembl_annotation = re.sub(r'\s*\[.*\]', '', ensembl_json.get('description'))
+            ensembl_source = re.search(r'\[.*\]', ensembl_json.get('description')).group(0)
+            ensembl_source = re.sub(r'\[\w*\:|]', '', ensembl_source)
+            ensembl_source = ensembl_source.strip()
+        ensembl_gene_name = ensembl_json.get('display_name')
+        ensembl_location = ensembl_json.get('seq_region_name') + ':' + str(ensembl_json.get('start')) + '-' + str(ensembl_json.get('end'))
+
+        if ensembl_json.get('display_name') is not None:
+            self.gene_annotation_label.config(text='Gene Name:', font=('Arial', 10, 'bold'))
+            self.gene_annotation.config(text=ensembl_gene_name, font=('Arial', 10, 'italic'))
+        else:
+            self.gene_annotation_label.config(text='')
+            self.gene_annotation.config(text='')
+
+        self.gene_transcript_label.config(text='Annotation:', font=('Arial', 10, 'bold'))
+        self.gene_transcript.config(text=ensembl_annotation, font=('Arial', 10, 'italic'))
+
+        self.gene_location_label.config(text='Location:', font=('Arial', 10, 'bold'))
+        self.gene_location.config(text=ensembl_location, font=('Arial', 10, 'italic'))
+
+        self.gene_class_label.config(text='Source:', font=('Arial', 10, 'bold'))
+        self.gene_class.config(text=ensembl_source, font=('Arial', 10, 'italic'))
+
+        self.go_terms_label.config(text='')
+        self.go_terms.config(text='')
+
+        self.pfam_ids_label.config(text='')
+        self.pfam_ids.config(text='')
+
+        self.interpro_ids_label.config(text='')
+        self.interpro_ids.config(text='')
