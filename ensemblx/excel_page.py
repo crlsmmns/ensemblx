@@ -15,24 +15,65 @@ class ExcelPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        frame1 = tk.Frame(self)
-        frame1.pack(pady=10)
+        s = ttk.Style()
+        s.configure('SecondaryTitle.TLabel', font=('Arial', 14), padding=[0, 0, 0, 0])
+        s.configure('Instructions.TLabel', font=('Arial', 12), padding=[0, 10, 0, 0])
 
-        title = ttk.Label(frame1, text="Import from Excel", style='Title.TLabel')
+        frame1 = tk.Frame(self)
+        frame1.pack()
+
+        title = ttk.Label(frame1, text="Use IDs from Excel", style='SecondaryTitle.TLabel')
         title.pack()
 
         frame2 = tk.Frame(self)
-        frame2.pack(pady=10)
+        frame2.pack()
+
+        step_1_instruct = ttk.Label(frame2, text='Step 1: Press "Select File" and choose an Excel document.',
+                                    style='Instructions.TLabel')
+        step_1_instruct.pack()
 
         get_file_button = ttk.Button(frame2, text="Select File",
                                      command=lambda: self.excel_processing(),
                                      style='StartPage.TButton')
         get_file_button.pack()
 
-        frame3 = tk.Frame(self)
-        frame3.pack(side='bottom', padx=10, pady=10)
+        selected_file_frame = tk.Frame(frame2)
+        selected_file_frame.pack()
 
-        return_button = ttk.Button(frame3, text="Return to Start Page",
+        file_selected_label = ttk.Label(selected_file_frame, text='File Selected:',
+                                        style='Instructions.TLabel',
+                                        font='bold')
+
+        file_selected_label.pack(side='left')
+        file_selected = ttk.Label(selected_file_frame, text='blahblahblah.xlsx',
+                                  style='Instructions.TLabel',
+                                  font='bold')
+        file_selected.pack(side='left')
+
+        frame3 = tk.Frame(self)
+        frame3.pack()
+
+        step_2_instruct = ttk.Label(frame3, text='Step 2: Check desired annotation sources.',
+                                    style='Instructions.TLabel')
+        step_2_instruct.pack()
+
+        frame4 = tk.Frame(self)
+        frame4.pack()
+
+        self.check_ensembl = tk.IntVar()
+
+        check_ensembl_button = ttk.Checkbutton(frame4, text="Ensembl Rest API", variable=self.check_ensembl)
+        check_ensembl_button.pack(side='left')
+
+        self.check_barlex = tk.IntVar()
+
+        check_barlex_button = ttk.Checkbutton(frame4, text="BARLEX: CDS HC May 2016", variable=self.check_barlex)
+        check_barlex_button.pack(side='left')
+
+        frame5 = tk.Frame(self)
+        frame5.pack(side='bottom', padx=10, pady=10)
+
+        return_button = ttk.Button(frame5, text="Return to Start Page",
                                    command=lambda: controller.show_frame(start_page.StartPage))
         return_button.pack()
 
