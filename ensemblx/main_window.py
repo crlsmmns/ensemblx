@@ -15,15 +15,15 @@ class MainWindow(tk.Tk):
 
         self.frames = {}
 
-        for F in (start_page.StartPage, excel_page.ExcelPage):
-            frame = F(main_frame, self)
+        for Frames in (start_page.StartPage, excel_page.ExcelPage):
+            frame = Frames(main_frame, self)
 
-            self.frames[F] = frame
+            self.frames[Frames] = frame
 
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame(start_page.StartPage)
 
-    def show_frame(self, cont):
-        frame = self.frames[cont]
+    def show_frame(self, page):
+        frame = self.frames[page]
         frame.tkraise()
