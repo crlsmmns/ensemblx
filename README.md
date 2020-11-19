@@ -15,6 +15,6 @@ EnsemblX was originally created to facilitate the typically repetative, manual p
 
 &nbsp;|Windows 10|macOS Catalina
 :---|:---:|:---:
-Start Page|![Windows 10 Start Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_windows10.png | width=250) | ![macOS Catalina Start Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_macoscatalina.png | width=250)
-Excel Page|![Windows 10 Excel Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_windows10.png | width=250) | ![macOS Catalina Excel Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_macoscatalina.png | width=250)
+Start Page|![Windows 10 Start Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_windows10.png) | ![macOS Catalina Start Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_macoscatalina.png)
+Excel Page|![Windows 10 Excel Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_windows10.png) | ![macOS Catalina Excel Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_macoscatalina.png)
 
