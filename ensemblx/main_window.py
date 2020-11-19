@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 import ensemblx.excel_page as excel_page
 import ensemblx.start_page as start_page
@@ -10,7 +11,7 @@ class MainWindow(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         self.title("EnsemblX")
 
-        main_frame = tk.Frame(self)
+        main_frame = ttk.Frame(self)
         main_frame.grid(row=0, column=0)
 
         self.frames = {}
