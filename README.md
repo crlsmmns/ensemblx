@@ -13,8 +13,8 @@ In the Python-based EnsemblX v2.0.0, the Ensembl Plants data is now retrieved us
 
 EnsemblX was originally created to facilitate the typically repetative, manual process of copying and pasting the relevant information for select genes of interest through each genome browser's website interface. As such, EnsemblX v2.0.0 tries to simplify the process even further by providing a basic user interface to interact with the annotation workflow. This user interface is currently built using Tkinter with ttk widgets for an native style across operating systems (currently tested on Windows 10 and macOS Catalina). 
 
-&nbsp;    |Windows 10                                                                                                          |macOS Catalina
-:---------|:------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------:
-Start Page|![Windows 10 Start Page]('https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_windows10.png')|![macOS Catalina Start Page]('https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_macoscatalina.png')
-Excel Page|![Windows 10 Excel Page]('https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_windows10.png')|![macOS Catalina Excel Page]('https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_macoscatalina.png')
+&nbsp;|Windows 10|macOS Catalina
+:---|:---:|:---:
+Start Page|![Windows 10 Start Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_windows10.png | width=250) | ![macOS Catalina Start Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_macoscatalina.png | width=250)
+Excel Page|![Windows 10 Excel Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_windows10.png | width=250) | ![macOS Catalina Excel Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_macoscatalina.png | width=250)
 
