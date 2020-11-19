@@ -1,21 +1,21 @@
 import json
+import re
 import tkinter as tk
-from tkinter import ttk
-from tkinter.filedialog import askopenfilename, asksaveasfilename
 from os import system
 from sys import platform
+from tkinter import ttk
+from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 import pandas as pd
 import requests
-import re
 
 import ensemblx.start_page as start_page
 
 
-class ExcelPage(tk.Frame):
+class ExcelPage(ttk.Frame):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        ttk.Frame.__init__(self, parent)
         self.controller = controller
 
         s = ttk.Style()
@@ -23,16 +23,17 @@ class ExcelPage(tk.Frame):
         s.configure('FileButtons.TButton', font=('Arial', 14), width=20)
         s.configure('Checkboxes.TCheckbutton', padding=[5, 0, 5, 10])
 
-        frame1 = tk.Frame(self)
+        frame1 = ttk.Frame(self)
         frame1.pack()
 
-        title = ttk.Label(frame1, text="Look up annotations with IDs from Excel", style='SecondaryTitle.TLabel', font=('Arial', 14))
+        title = ttk.Label(frame1, text="Reference annotations with IDs from Excel", style='SecondaryTitle.TLabel',
+                          font=('Arial', 14))
         title.pack(pady=5)
 
         title_sep = ttk.Separator(self)
         title_sep.pack(fill='both')
 
-        frame2 = tk.Frame(self)
+        frame2 = ttk.Frame(self)
         frame2.pack()
 
         step_1_instruct = ttk.Label(frame2, text='Step 1: Click "Select File" and choose an Excel document.',
@@ -44,7 +45,7 @@ class ExcelPage(tk.Frame):
                                      style='FileButtons.TButton')
         get_file_button.pack()
 
-        selected_file_frame = tk.Frame(frame2)
+        selected_file_frame = ttk.Frame(frame2)
         selected_file_frame.pack()
 
         file_selected_label = ttk.Label(selected_file_frame, text='File Selected:',
@@ -53,40 +54,42 @@ class ExcelPage(tk.Frame):
         file_selected_label.pack(side='left')
 
         self.file_selected = ttk.Label(selected_file_frame, text='None',
-                                  font=('Arial', 10, 'italic'), padding=[0, 10, 0, 10])
+                                       font=('Arial', 10, 'italic'), padding=[0, 10, 0, 10])
         self.file_selected.pack(side='left')
 
         step_1_sep = ttk.Separator(self)
         step_1_sep.pack(fill='both')
 
-        frame3 = tk.Frame(self)
+        frame3 = ttk.Frame(self)
         frame3.pack()
 
         step_2_instruct = ttk.Label(frame3, text='Step 2: Check at least 1 annotation source.',
                                     style='Instructions.TLabel')
         step_2_instruct.pack()
 
-        frame4 = tk.Frame(self)
+        frame4 = ttk.Frame(self)
         frame4.pack()
 
         self.check_ensembl = tk.IntVar()
 
-        self.check_ensembl_button = ttk.Checkbutton(frame4, text="Ensembl REST API", variable=self.check_ensembl, style='Checkboxes.TCheckbutton',
-                                               command=lambda: self.check_active_sources())
+        self.check_ensembl_button = ttk.Checkbutton(frame4, text="Ensembl REST API", variable=self.check_ensembl,
+                                                    style='Checkboxes.TCheckbutton',
+                                                    command=lambda: self.check_active_sources())
         self.check_ensembl_button.pack(side='left')
         self.check_ensembl_button.state(['disabled'])
 
         self.check_barlex = tk.IntVar()
 
-        self.check_barlex_button = ttk.Checkbutton(frame4, text="BARLEX: CDS HC May 2016", variable=self.check_barlex, style='Checkboxes.TCheckbutton',
-                                              command=lambda: self.check_active_sources())
+        self.check_barlex_button = ttk.Checkbutton(frame4, text="BARLEX: CDS HC May 2016", variable=self.check_barlex,
+                                                   style='Checkboxes.TCheckbutton',
+                                                   command=lambda: self.check_active_sources())
         self.check_barlex_button.pack(side='left')
         self.check_barlex_button.state(['disabled'])
 
         step_2_sep = ttk.Separator(self)
         step_2_sep.pack(fill='both')
 
-        frame5 = tk.Frame(self)
+        frame5 = ttk.Frame(self)
         frame5.pack()
 
         step_3_instruct = ttk.Label(frame5, text='Step 3: Start data processing.',
@@ -100,9 +103,7 @@ class ExcelPage(tk.Frame):
         self.go_button.state(['disabled'])
         self.go_button.pack(side='left', padx=5)
 
-        print(self.go_button)
-
-        frame6 = tk.Frame(self)
+        frame6 = ttk.Frame(self)
         frame6.pack()
 
         self.progress_text = ttk.Label(frame6, text='Waiting to start', font=('Arial', 10, 'italic'))
@@ -111,21 +112,22 @@ class ExcelPage(tk.Frame):
         step_3_sep = ttk.Separator(self)
         step_3_sep.pack(fill='both')
 
-        frame7 = tk.Frame(self)
+        frame7 = ttk.Frame(self)
         frame7.pack()
 
         step_2_instruct = ttk.Label(frame7, text='Step 4: Open the annotated Excel file.',
                                     font=('Arial', 12), padding=[0, 10, 0, 0])
         step_2_instruct.pack()
 
-        self.open_output_button = ttk.Button(frame7, text='Open Output', command=lambda: self.open_output(), style='FileButtons.TButton')
+        self.open_output_button = ttk.Button(frame7, text='Open Output', command=lambda: self.open_output(),
+                                             style='FileButtons.TButton')
         self.open_output_button.pack(pady=10)
         self.open_output_button.state(['disabled'])
 
         step_4_sep = ttk.Separator(self)
         step_4_sep.pack(fill='both')
 
-        frame8 = tk.Frame(self)
+        frame8 = ttk.Frame(self)
         frame8.pack(side='bottom')
 
         return_button = ttk.Button(frame8, text="Return to Start Page",
@@ -159,7 +161,8 @@ class ExcelPage(tk.Frame):
         for index, sheet in enumerate(self.excel_sheets):
             self.progress_bar['value'] += self.progress_step
             self.progress_bar.update_idletasks()
-            self.progress_text.config(text=('Requesting data from Ensembl (' + sheet + ')'), font=('Arial', 10, 'italic'))
+            self.progress_text.config(text=('Requesting data from Ensembl (' + sheet + ')'),
+                                      font=('Arial', 10, 'italic'))
             self.progress_text.update_idletasks()
 
             requested_ids = self.excel_sheets[sheet]['Gene ID'].tolist()
@@ -173,7 +176,6 @@ class ExcelPage(tk.Frame):
             ensembl_data = self.excel_sheets[sheet].merge(ensembl_df, how='left', left_on='Gene ID',
                                                           right_on='ensembl_id')
             self.excel_sheets[sheet] = ensembl_data
-            print('Api Check!')
 
     def add_barlex_data(self):
         self.progress_text.config(text='Merging local BARLEX data', font=('Arial', 10, 'italic'))
@@ -195,16 +197,15 @@ class ExcelPage(tk.Frame):
             self.progress_bar.update_idletasks()
             self.progress_text.config(text=('Merging local BARLEX data: ' + sheet), font=('Arial', 10, 'italic'))
             self.progress_text.update_idletasks()
-            print('Barlex Merge!')
 
     def get_save(self):
         self.progress_bar['value'] += self.progress_step
         self.progress_bar.update_idletasks()
         self.progress_text.config(text='Waiting for save location', font=('Arial', 10, 'italic'))
         self.progress_text.update_idletasks()
-        self.savefilename = asksaveasfilename(filetypes=[('Excel Files (XLSX)', '*.xlsx'), ('Excel Files (XLS)', '*.xls')],
+        self.savefilename = asksaveasfilename(
+            filetypes=[('Excel Files (XLSX)', '*.xlsx'), ('Excel Files (XLS)', '*.xls')],
             defaultextension='.xlsx')
-        print(self.savefilename) # show an "Open" dialog box and return the path to the selected file
 
     def write_excel(self):
         self.progress_text.config(text='Writing output to Excel file', font=('Arial', 10, 'italic'))
@@ -212,11 +213,9 @@ class ExcelPage(tk.Frame):
         writer = pd.ExcelWriter(self.savefilename)
         for sheet in self.excel_sheets:
             self.excel_sheets[sheet].to_excel(writer, sheet_name=sheet)
-            print(sheet)
         writer.save()
         self.progress_bar['value'] += self.progress_step
         self.progress_bar.update_idletasks()
-        print('Write!')
 
     def excel_processing(self):
         self.progress_text.config(text='Reading input from Excel file', font=('Arial', 10, 'italic'))
@@ -229,10 +228,10 @@ class ExcelPage(tk.Frame):
             self.add_barlex_data()
         self.get_save()
         self.write_excel()
-        self.progress_text.config(text=('Processing of "' + self.filename_short + '" complete!'), font=('Arial', 10, 'italic'))
+        self.progress_text.config(text=('Processing of "' + self.filename_short + '" complete!'),
+                                  font=('Arial', 10, 'italic'))
         self.progress_text.update_idletasks()
         self.open_output_button.state(['!disabled'])
-        print('Done!')
 
     def return_to_start(self, controller):
         controller.show_frame(start_page.StartPage)
@@ -255,7 +254,7 @@ class ExcelPage(tk.Frame):
 
     def check_active_input(self):
         try:
-            print(self.filename)
+            print(self.filename)  # Crude way to test if this object attribute exists (to generate AttributeError)
             if self.filename == 'None':
                 self.check_ensembl_button.state(['disabled'])
                 self.check_barlex_button.state(['disabled'])
