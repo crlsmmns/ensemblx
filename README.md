@@ -23,8 +23,9 @@ Start Page|Excel Page
 :---:|:---:
 ![Windows 10 Start Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_windows10.png) | ![Windows 10 Excel Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_windows10.png)
 
-### Current Problems for Future Versions
+### Current Bugs for Future Versions
 * The process for creating the executable version of EnsemblX with pyinstaller currently only works for creating the Windows executable. Trial and error has not yet led to a functioning macOS application.
-* If the user interacts with the GUI while the underlying workflow is running, the window becomes unresponsive until the process is complete. The solution may involve running the underlying workflow in a separate processing thread so that the tkinter `mainloop()` is always free to update the GUI widgets.
+* While the underlying workflow is running, the GUI often becomes unresponsive until the process is complete. The solution may involve running the underlying workflow in a separate processing thread so that the tkinter `mainloop()` is always free to update the GUI widgets.
 * The first implementation of the quick reference feature (currently removed except for a disabled placeholder button on the start page of the GUI) could not be formatted properly using my current understanding of tkinter and the ttk widgets. Perhaps creating and destroying frames and widgets as needed with the `destroy()` method (as opposed to stacking and raising them with the `show_frame()` method) would better support displaying the varying format of the quick reference output on-screen.
 * There is no option for selecting which data fields to return from each source in the final output so the final Excel file contains all the information returned from the selected source(s). Implementing a hierarchical list of the data fields available from each source (with checkboxes to select them) could be used to generate a string of the desired data fields by which to filter the final pandas DataFrame before writing to Excel.
+* The "File Selected" text on the Excel page retains the originally selected file if the open file window is opened and closed without selecting a new file.

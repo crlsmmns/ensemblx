@@ -185,6 +185,7 @@ cython_debug/
 
 # Test data
 data/excel-test-set.xls
+data/excel-test-set.ods
 
 # EnsemblX distributions
 *.zip
