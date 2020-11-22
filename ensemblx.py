@@ -5,6 +5,7 @@ import sys
 import tkinter as tk
 import webbrowser
 from tkinter import ttk
+from tkinter import messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 import pandas as pd
@@ -105,7 +106,8 @@ class StartPage(ttk.Frame):
         github_licence_sep = ttk.Separator(self)
         github_licence_sep.pack(side='bottom', fill='both', pady=10)
 
-    def open_url(self, url):
+    @staticmethod
+    def open_url(url):
         webbrowser.open_new(url)
 
 
@@ -119,6 +121,7 @@ class ExcelPage(ttk.Frame):
         s.configure('Instructions.TLabel', font=('Arial', 12), padding=[0, 10, 0, 10])
         s.configure('FileButtons.TButton', font=('Arial', 14), width=20)
         s.configure('Checkboxes.TCheckbutton', padding=[5, 0, 5, 10])
+        s.configure('Failed.Horizontal.TProgressbar', foreground='red', background='red')
 
         frame1 = ttk.Frame(self)
         frame1.pack()
@@ -232,7 +235,9 @@ class ExcelPage(ttk.Frame):
         return_button.pack(pady=10)
 
     def get_file(self):
-        self.filename = askopenfilename()
+        self.filename = askopenfilename(title="Select file",
+                                        filetypes=[('Excel Spreadsheets', '*.xls;*.xlsx;*.xlsm;*.xlsb'),
+                                                   ('OpenOffice Spreadsheets', '*.ods')])
         self.check_active_input()
         self.filename_short = re.search(r'\/([^\/]*)$', self.filename).group(1)
         self.file_selected.config(text=self.filename_short)
@@ -302,7 +307,7 @@ class ExcelPage(ttk.Frame):
         self.progress_text.config(text='Waiting for save location', font=('Arial', 10, 'italic'))
         self.progress_text.update_idletasks()
         self.savefilename = asksaveasfilename(
-            filetypes=[('Excel Files (XLSX)', '*.xlsx'), ('Excel Files (XLS)', '*.xls')],
+            filetypes=[('All Files', '*.*')],
             defaultextension='.xlsx')
 
     def write_excel(self):
@@ -314,24 +319,30 @@ class ExcelPage(ttk.Frame):
         writer.save()
         self.progress_bar['value'] += 10
         self.progress_bar.update_idletasks()
-
-    def excel_processing(self):
-        self.progress_bar['value'] = 0
-        self.progress_bar.update_idletasks()
-        self.progress_text.config(text='Reading input from Excel file', font=('Arial', 10, 'italic'))
-        self.progress_text.update_idletasks()
-        self.read_excel()
-        self.progress_steps()
-        if self.check_ensembl.get():
-            self.run_ensembl_api()
-        if self.check_barlex.get():
-            self.add_barlex_data()
-        self.get_save()
-        self.write_excel()
         self.progress_text.config(text=('Processing of "' + self.filename_short + '" complete!'),
                                   font=('Arial', 10, 'italic'))
         self.progress_text.update_idletasks()
         self.open_output_button.state(['!disabled'])
+
+    def excel_processing(self):
+        try:
+            self.progress_bar['value'] = 0
+            self.progress_bar.update_idletasks()
+            self.progress_text.config(text='Reading input from Excel file', font=('Arial', 10, 'italic'))
+            self.progress_text.update_idletasks()
+            self.read_excel()
+            self.progress_steps()
+            if self.check_ensembl.get():
+                self.run_ensembl_api()
+            if self.check_barlex.get():
+                self.add_barlex_data()
+            self.get_save()
+            self.write_excel()
+        except Exception as processing_error:
+            self.progress_text.config(text='Process failed. Please check errors and restart.',
+                                      font=('Arial', 10, 'italic'))
+            self.progress_text.update_idletasks()
+            messagebox.showerror(title='Ensemblx', message=processing_error)
 
     def return_to_start(self, controller):
         controller.show_frame(StartPage)
