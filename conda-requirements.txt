@@ -1,8 +1,8 @@
 # This file may be used to create an environment using:
 # $ conda create --name <env> --file <this file>
 # platform: win-64
-# To add writing to *.xls files run `$ conda install -c conda-forge xlwt` (here version xlwt-1.3.0)
-# To add reading and writing of *.ods files run `$ conda install -c conda-forge odfpy` (here version odfpy-1.4.1)
+# To add writing to *.xls files run `$ conda install --name <env> -c conda-forge xlwt=1.3.0`
+# To add reading and writing of *.ods files run `$ conda install --name <env> -c conda-forge odfpy=1.4.1`
 # To add pyinstaller for packaging as executable run:
 # `$ pip install https://github.com/pyinstaller/pyinstaller/tarball/develop` (here version 4.2.dev0)
 blas=1.0=mkl
