@@ -21,7 +21,7 @@ Below are screenshots of the two main GUI pages implemented in EnsemblX v2.0.0. 
 
 Start Page|Excel Page
 :---:|:---:
-![Windows 10 Start Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_startpage_windows10.png) | ![Windows 10 Excel Page](https://github.com/crlsmmns/ensemblx/blob/v2.0.0/images/ensemblx_excelpage_windows10.png)
+![Windows 10 Start Page](https://github.com/crlsmmns/ensemblx/blob/main/images/ensemblx_startpage_windows10.png) | ![Windows 10 Excel Page](https://github.com/crlsmmns/ensemblx/blob/main/images/ensemblx_excelpage_windows10.png)
 
 ### Current Bugs for Future Versions
 * The process for creating the executable version of EnsemblX with pyinstaller currently only works for creating the Windows executable. Trial and error has not yet led to a functioning macOS application.
