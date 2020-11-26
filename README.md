@@ -24,6 +24,7 @@ Start Page|Excel Page
 ![Windows 10 Start Page](https://github.com/crlsmmns/ensemblx/blob/main/images/ensemblx_startpage_windows10.png) | ![Windows 10 Excel Page](https://github.com/crlsmmns/ensemblx/blob/main/images/ensemblx_excelpage_windows10.png)
 
 ### Current Bugs for Future Versions
+* In the current executable EnsemblX will not read from `*.xlsx` files without error. Must look into cause.
 * The process for creating the executable version of EnsemblX with pyinstaller currently only works for creating the Windows executable. Trial and error has not yet led to a functioning macOS application.
 * While the underlying workflow is running, the GUI often becomes unresponsive until the process is complete. The solution may involve running the underlying workflow in a separate processing thread so that the tkinter `mainloop()` is always free to update the GUI widgets.
 * The first implementation of the quick reference feature (currently removed except for a disabled placeholder button on the start page of the GUI) could not be formatted properly using my current understanding of tkinter and the ttk widgets. Perhaps creating and destroying frames and widgets as needed with the `destroy()` method (as opposed to stacking and raising them with the `show_frame()` method) would better support displaying the varying format of the quick reference output on-screen.
